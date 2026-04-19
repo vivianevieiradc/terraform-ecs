@@ -99,3 +99,29 @@ terraform apply
 
 - This is a minimal MVP focused on clarity.
 - `aws_profile` is optional. Keep it empty in CI environments.
+
+## Module details
+
+Short descriptions and key inputs/outputs for each module:
+
+- **modules/vpc**: cria a VPC e subnets públicas, internet gateway e rotas.
+  - Inputs: `project_name`, `vpc_cidr`.
+  - Outputs: `vpc_id`, `public_subnet_ids`.
+
+- **modules/sg**: security group para instâncias ECS e serviços.
+  - Inputs: `project_name`, `vpc_id`, `container_port`.
+  - Outputs: `sg_id` (security group usado pelo Launch Template).
+
+- **modules/cluster**: cria o `aws_ecs_cluster`, `aws_ecs_task_definition` e `aws_ecs_service`.
+  - Inputs: `project_name`, `container_image`, `container_port`, `container_name`, `execution_role_arn`, `desired_count`, `aws_region`.
+  - Outputs: `cluster_name`, `service_name`, `task_definition_arn`.
+
+- **modules/asg_ecs_instance**: Launch Template + Auto Scaling Group para instâncias que executam tasks EC2.
+  - Inputs: `project_name`, `vpc_id`, `subnet_ids`, `instance_profile_name`, `instance_type`, `min_size`, `max_size`, `desired_capacity`.
+  - Outputs: (nenhum obrigatório), cria o ASG e LT para o cluster.
+
+- **modules/iam**: roles e policies centralizadas (task execution role, instance profile, SSM policy).
+  - Inputs: `project_name`.
+  - Outputs: `ecs_task_execution_role_arn`, `ecs_instance_profile_name`.
+
+Keep these inputs in mind ao ajustar `terraform.tfvars` para seu ambiente.
