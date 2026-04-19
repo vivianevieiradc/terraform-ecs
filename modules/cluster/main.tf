@@ -10,7 +10,7 @@ resource "aws_ecs_cluster" "this" {
 
 resource "aws_ecs_task_definition" "this" {
   family                   = "${var.project_name}-task"
-  network_mode             = "host"
+  network_mode             = "bridge"
   requires_compatibilities = ["EC2"]
   execution_role_arn       = var.execution_role_arn
 
@@ -22,7 +22,7 @@ resource "aws_ecs_task_definition" "this" {
       portMappings = [
         {
           containerPort = var.container_port
-          hostPort      = var.container_port
+          hostPort      = 0
           protocol      = "tcp"
         }
       ]
@@ -47,5 +47,5 @@ resource "aws_ecs_service" "this" {
   launch_type     = "EC2"
   desired_count   = var.desired_count
 
-  # network_configuration removido para compatibilidade com network_mode = "host"
+  # network_configuration is not used with bridge mode on ECS EC2.
 }

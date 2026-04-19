@@ -46,3 +46,21 @@ variable "desired_capacity" {
   type        = number
   default     = 1
 }
+
+variable "alb_security_group_id" {
+  description = "ALB security group ID allowed to reach ECS dynamic host ports. Keep null for SSM-only workloads."
+  type        = string
+  default     = null
+}
+
+variable "dynamic_host_port_min" {
+  description = "Minimum host port for ECS dynamic port mapping"
+  type        = number
+  default     = 32768
+}
+
+variable "dynamic_host_port_max" {
+  description = "Maximum host port for ECS dynamic port mapping"
+  type        = number
+  default     = 65535
+}

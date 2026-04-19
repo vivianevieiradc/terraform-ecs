@@ -8,13 +8,6 @@ module "vpc" {
   vpc_cidr     = var.vpc_cidr
 }
 
-module "sg" {
-  source         = "./modules/sg"
-  project_name   = var.project_name
-  vpc_id         = module.vpc.vpc_id
-  container_port = var.container_port
-}
-
 module "asg_ecs_instance" {
   source                = "./modules/asg_ecs_instance"
   project_name          = var.project_name
