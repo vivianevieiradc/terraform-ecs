@@ -1,4 +1,12 @@
 terraform {
+  backend "s3" {
+    bucket       = "iac-terraform-global-state"
+    key          = "ecs-study/terraform.tfstate"
+    region       = "us-east-1"
+    use_lockfile = true
+    encrypt      = true
+  }
+
   required_version = ">= 1.5.0"
 
   required_providers {
