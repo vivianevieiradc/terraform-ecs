@@ -26,7 +26,7 @@ variable "instance_profile_name" {
 variable "instance_type" {
   description = "EC2 instance type"
   type        = string
-  default     = "t3.micro"
+  default     = "t3.small"
 }
 
 variable "min_size" {
@@ -48,9 +48,8 @@ variable "desired_capacity" {
 }
 
 variable "alb_security_group_id" {
-  description = "ALB security group ID allowed to reach ECS dynamic host ports. Keep null for SSM-only workloads."
+  description = "ALB security group ID allowed to reach ECS dynamic host ports"
   type        = string
-  default     = null
 }
 
 variable "dynamic_host_port_min" {

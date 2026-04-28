@@ -2,10 +2,19 @@ module "iam" {
   source       = "./modules/iam"
   project_name = var.project_name
 }
+
 module "vpc" {
   source       = "./modules/vpc"
   project_name = var.project_name
   vpc_cidr     = var.vpc_cidr
+}
+
+module "alb" {
+  source         = "./modules/alb"
+  project_name   = var.project_name
+  vpc_id         = module.vpc.vpc_id
+  subnet_ids     = module.vpc.public_subnet_ids
+  container_port = var.container_port
 }
 
 module "asg_ecs_instance" {
@@ -15,6 +24,7 @@ module "asg_ecs_instance" {
   subnet_ids            = module.vpc.public_subnet_ids
   ecs_cluster_name      = module.cluster.cluster_name
   instance_profile_name = module.iam.ecs_instance_profile_name
+  alb_security_group_id = module.alb.alb_security_group_id
   # instance_type, min_size, max_size, desired_capacity usam default, pode sobrescrever via tfvars
 }
 
@@ -26,4 +36,5 @@ module "cluster" {
   container_port     = var.container_port
   desired_count      = var.desired_count
   execution_role_arn = module.iam.ecs_task_execution_role_arn
+  target_group_arn   = module.alb.target_group_arn
 }

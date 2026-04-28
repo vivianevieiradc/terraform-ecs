@@ -9,3 +9,8 @@ output "cluster_name" {
 output "service_name" {
   value = module.cluster.service_name
 }
+
+output "alb_dns_name" {
+  description = "DNS name of the Application Load Balancer"
+  value       = module.alb.alb_dns_name
+}

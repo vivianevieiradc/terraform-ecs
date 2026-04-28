@@ -35,3 +35,8 @@ variable "execution_role_arn" {
   description = "ARN da role de execução do ECS Task (IAM)"
   type        = string
 }
+
+variable "target_group_arn" {
+  description = "ARN do Target Group do ALB"
+  type        = string
+}

@@ -22,7 +22,6 @@ resource "aws_security_group" "ecs_instance" {
 }
 
 resource "aws_security_group_rule" "ingress_from_alb_dynamic_ports" {
-  count                    = var.alb_security_group_id == null ? 0 : 1
   type                     = "ingress"
   from_port                = var.dynamic_host_port_min
   to_port                  = var.dynamic_host_port_max
