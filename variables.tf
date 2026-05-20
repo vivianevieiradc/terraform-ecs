@@ -38,5 +38,5 @@ variable "container_port" {
 variable "desired_count" {
   description = "Desired ECS tasks"
   type        = number
-  default     = 1
+  default     = 2
 }

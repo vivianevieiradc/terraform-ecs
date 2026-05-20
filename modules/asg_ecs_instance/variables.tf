@@ -32,19 +32,19 @@ variable "instance_type" {
 variable "min_size" {
   description = "ASG min size"
   type        = number
-  default     = 1
+  default     = 2
 }
 
 variable "max_size" {
   description = "ASG max size"
   type        = number
-  default     = 2
+  default     = 3
 }
 
 variable "desired_capacity" {
   description = "ASG desired capacity"
   type        = number
-  default     = 1
+  default     = 2
 }
 
 variable "alb_security_group_id" {

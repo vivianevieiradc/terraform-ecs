@@ -46,6 +46,7 @@ resource "aws_lb_target_group" "tg" {
   health_check {
     path                = "/"
     protocol            = "HTTP"
+    port                = "traffic-port"
     matcher             = "200-399"
     interval            = 30
     timeout             = 5
