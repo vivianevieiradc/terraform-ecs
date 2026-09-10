@@ -33,7 +33,7 @@ jobs:
         with:
           setup-aws: false
           setup-terraform: true
-          terraform-version: "1.5.0"
+          terraform-version: "1.11.0"
           no-backend: true
           disable-locking: true
         env:
