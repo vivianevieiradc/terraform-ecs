@@ -1,0 +1,12 @@
+# Digger configuration — runs in backendless/no-backend mode via GitHub Actions
+# (see .github/workflows/digger.yml). No Digger Cloud account or DIGGER_TOKEN required.
+# Reference: https://docs.digger.dev/ce/reference/digger.yml
+#
+# This repo has a single root module (main.tf) that composes everything under
+# modules/* into one state (see providers.tf backend config), so there is only
+# one plannable project: the repo root.
+
+projects:
+  - name: root
+    dir: "."
+    apply_requirements: [mergeable]

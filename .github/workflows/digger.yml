@@ -1,0 +1,40 @@
+name: Digger
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+  statuses: write
+  actions: write
+  id-token: write
+
+jobs:
+  digger:
+    if: github.event_name == 'pull_request' || (github.event.issue.pull_request && contains(github.event.comment.body, 'digger'))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Run Digger
+        uses: diggerhq/digger@v0.6.143
+        with:
+          setup-aws: false
+          setup-terraform: true
+          terraform-version: "1.5.0"
+          no-backend: true
+          disable-locking: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
